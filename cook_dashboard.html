@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Cook Dashboard</h1>
+    </header>
+
+    <main>
+        <!-- Add New Food Item Section -->
+        <section class="food-form">
+            <h2>Add New Food Item</h2>
+            <form id="foodForm">
+                <label for="foodName">Food Name:</label>
+                <input type="text" id="foodName" placeholder="Enter food name" required>
+
+                <label for="foodPrice">Price:</label>
+                <input type="number" id="foodPrice" placeholder="Enter price" required>
+
+                <label for="foodImage">Image:</label>
+                <input type="file" id="foodImage" accept="image/*" required>
+
+                <label for="foodDescription">Description:</label>
+                <textarea id="foodDescription" placeholder="Describe the dish" required></textarea>
+
+                <button type="submit">Add Food Item</button>
+            </form>
+        </section>
+
+        <!-- Food Items Display Section -->
+        <section id="foodList">
+            <h2>My Food Items</h2>
+            <div class="items-container" id="itemsContainer">
+                <!-- Food items added dynamically here -->
+            </div>
+        </section>
+
+        <!-- Update Personal Details -->
+        <section class="personal-details">
+            <h2>Update Personal Details</h2>
+            <form id="detailsForm">
+                <label for="cookLocation">Location:</label>
+                <input type="text" id="cookLocation" placeholder="Enter location" required>
+
+                <label for="cookEmail">Email:</label>
+                <input type="email" id="cookEmail" placeholder="Enter email" required>
+
+                <label for="cookPhone">Phone:</label>
+                <input type="tel" id="cookPhone" placeholder="Enter mobile number" required>
+
+                <button type="submit">Update Details</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Existing cook verification logic
+        document.getElementById("existingCookVerificationForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+        
+            const enteredEmail = document.getElementById("existingCookEmail").value.trim();
+            const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+        
+            const cook = cooks.find(c => c.email === enteredEmail);
+            if (cook) {
+                alert("Verification successful. Redirecting to your dashboard...");
+                localStorage.setItem("currentCookEmail", enteredEmail); // Store current cook's email for dashboard access
+                window.location.href = "cook_dashboard.html";
+            } else {
+                alert("No matching cook found. Please register as a new cook.");
+            }
+        });
+    
+        // Add this code for deleting cook details
+        document.getElementById("deleteCookBtn").addEventListener("click", function () {
+            const enteredEmail = document.getElementById("existingCookEmail").value.trim();
+            if (!enteredEmail) {
+                alert("Please enter an email to delete.");
+                return;
+            }
+    
+            const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+            const cookIndex = cooks.findIndex(c => c.email === enteredEmail);
+    
+            if (cookIndex !== -1) {
+                if (confirm("Are you sure you want to delete this cook's details?")) {
+                    cooks.splice(cookIndex, 1); // Remove the cook from the array
+                    localStorage.setItem("cooks", JSON.stringify(cooks)); // Update localStorage
+                    alert("Cook details deleted successfully.");
+                    document.getElementById("existingCookEmail").value = ""; // Clear the input
+                }
+            } else {
+                alert("No matching cook found with the provided email.");
+            }
+        });
+    </script>
+
+   
+
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

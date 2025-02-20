@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Browse Dishes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Mummy's Kitchen</a></div>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html">Browse Dish</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </header>
+
+
+    <main class="menu-container">
+        <h2>Available Cooks</h2>
+        <div class="form-group">
+            <label for="filterLocation">Filter by Location:</label>
+            <input type="text" id="filterLocation" placeholder="Enter location">
+            <button id="filterBtn" class="btn">Filter</button>
+        </div>
+        <div id="cookList" class="cook-list">
+            
+        </div>
+    </main>
+
+    <!-- <script src="menu.js"></script> -->
+
+
+    <script>
+
+    // Fetch cooks from localStorage and display on the menu
+    document.addEventListener("DOMContentLoaded", () => {
+        const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+        const cookList = document.getElementById("cookList");
+        const filterLocation = document.getElementById("filterLocation");
+        const filterBtn = document.getElementById("filterBtn");
+
+        // Function to render cook cards
+        const renderCooks = (filteredCooks) => {
+            cookList.innerHTML = ""; // Clear existing cards
+
+            if (filteredCooks.length === 0) {
+                cookList.innerHTML = "<p>No cooks found for the specified location.</p>";
+                return;
+            }
+
+            filteredCooks.forEach((cook, index) => {
+                const cookCard = document.createElement("div");
+                cookCard.classList.add("cook-card");
+                cookCard.innerHTML = `
+                    <h3>${cook.name}</h3>
+                    <p><strong>Location:</strong> ${cook.location}</p>
+                    <p><strong>Type:</strong> ${cook.type} (${cook.days})</p>
+                    <button class="explore-btn" onclick="viewCookDetails(${index})">Explore Now</button>
+                    
+                `;
+                cookList.appendChild(cookCard);
+            });
+        };
+
+        // Initial render of all cooks
+        renderCooks(cooks);
+
+        // Filter functionality
+        filterBtn.addEventListener("click", () => {
+            const location = filterLocation.value.trim().toLowerCase();
+            const filteredCooks = cooks.filter((cook) =>
+                cook.location.toLowerCase().includes(location)
+            );
+            renderCooks(filteredCooks); // Render filtered cooks
+        });
+
+        // Function to view a cook's profile
+        window.viewCookDetails = (index) => {
+            localStorage.setItem("selectedCook", index); // Store the selected cook's index
+            window.location.href = "cook_profile.html";
+        };
+    });
+</script>
+
+        <!-- // Fetch cooks from localStorage and display on the menu
+    //     document.addEventListener("DOMContentLoaded", () => {
+    //         const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+    //         const cookList = document.getElementById("cookList");
+
+    //         if (cooks.length === 0) {
+    //             cookList.innerHTML = "<p>No cooks available. Please check back later.</p>";
+    //             return;
+    //         }
+
+    //         cooks.forEach((cook, index) => {
+    //             const cookCard = document.createElement("div");
+    //             cookCard.classList.add("cook-card");
+    //             cookCard.innerHTML = `
+    //                 <h3>${cook.name}</h3>
+    //                 <p><strong>Location:</strong> ${cook.location}</p>
+    //                 <p><strong>Type:</strong> ${cook.type} (${cook.days})</p>
+    //                 <button class="explore-btn" onclick="viewCookDetails(${index})">Explore Now</button>
+    //             `;
+    //             cookList.appendChild(cookCard);
+    //         });
+    //     });
+
+    //     // Function to view a cook's profile
+    //     function viewCookDetails(index) {
+    //         localStorage.setItem("selectedCook", index); // Store the selected cook's index
+    //         window.location.href = "cook_profile.html";
+    //     }
+    // -->
+ <!-- </script> -->
+
+
+
+    <!-- <h2>These are Available Cooks based on your location.</h2>
+<div id="cookList"></div>
+
+<script>
+// Fetch cooks from localStorage and display on the menu
+document.addEventListener("DOMContentLoaded", () => {
+    const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+    const cookList = document.getElementById("cookList");
+
+    cooks.forEach(cook => {
+        const cookCard = document.createElement("div");
+        cookCard.classList.add("cook-card");
+        cookCard.innerHTML = `
+            <h3>${cook.name}</h3>
+            <p>Location: ${cook.location}</p>
+            <button class="explore-btn" onclick="viewCookDetails(${index})">Explore Now</button>
+            <button onclick="viewCookDetails('${cook.email}')">View Details</button>
+        `;
+        cookList.appendChild(cookCard);
+    });
+
+    window.openCookProfile = (index) => {
+                localStorage.setItem("selectedCook", index);
+                window.location.href = "cook_profile.html";
+            };
+}); -->
+
+<!-- // Function to view a cook's profile
+function viewCookDetails(email) {
+    localStorage.setItem("selectedCookEmail", email); // Store the selected cook's email
+    window.location.href = "cook_profile.html";
+}
+</script> -->
+
+    
+
+    <footer>
+        <p>&copy; 2024 Mummy's Kitchen. All rights reserved.</p>
+        <ul class="social-links">
+            <li><img src="images/facebook-icon.png" alt="Facebook"></li>
+            <li><img src="images/instagram-icon.png" alt="Instagram"></li>
+            <li><img src="images/twitter-icon.png" alt="Twitter"></li>
+        </ul>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+ 

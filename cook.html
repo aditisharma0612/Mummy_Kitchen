@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo"><a href="index.html">Mummy's Kitchen</a></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Browse Dish</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </header>
+
+    <main class="cook-dashboard">
+        <div style="background-image: url('thali.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; width: 100%; height: 500px;">
+        <h1>Welcome Cook!</h1>
+        <background-img
+        <div class="card-container">
+            <!-- New Cook Card -->
+            <div class="card" id="newCookCard">
+                <h2>New Cook</h2>
+                <p>Register as a new cook by entering your complete details, including food, price, and pictures.</p>
+                <button class="btn" onclick="openForm('newCook')">Get Started</button>
+            </div>
+
+            <!-- Existing Cook Card -->
+            <div class="card" id="existingCookCard">
+                <h2>Existing Cook</h2>
+                <p>Update your details, manage items, browse orders, and view your earnings and feedback.</p>
+                <button class="btn" onclick="openForm('existingCook')">Manage Account</button>
+            </div>
+        </div>
+        </div>
+
+
+
+
+        <!-- New Cook Form -->
+        <div class="form-container" id="newCookForm" style="display: none;">
+            <h2>New Cook Registration</h2>
+            <form id="registerCookForm">
+                <div class="form-group">
+                    <label for="newCookName">Name:</label>
+                    <input type="text" id="newCookName" placeholder="Enter your name" required>
+                </div>
+
+                   <label for="newCookEmail">Email:</label>
+                   <input type="email" id="newCookEmail" placeholder="Enter your email" required />
+
+                <div class="form-group">
+                    <label for="newCookLocation">Location:</label>
+                    <input type="text" id="newCookLocation" placeholder="Enter your location" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="availability">Days Available:</label>
+                    <input type="text" id="availability" placeholder="e.g., Mon-Fri, Weekends" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="timings">Timings:</label>
+                    <input type="text" id="timings" placeholder="e.g., 10:00 AM - 2:00 PM" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="foodDetails">Details about your food (e.g., type, description):</label>
+                    <textarea id="foodDetails" placeholder="Describe your dishes" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="foodType">Food Type:</label>
+                    <select id="foodType" required>
+                        <option value="" disabled selected>Select type</option>
+                        <option value="Veg">Veg</option>
+                        <option value="Non-Veg">Non-Veg</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="foodPrice">Price per Thali:</label>
+                    <input type="number" id="foodPrice" placeholder="Enter price" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="hygiene">Hygienic Conditions:</label>
+                    <select id="hygiene" required>
+                        <option value="" disabled selected>Select rating</option>
+                        <option value="Excellent">Excellent</option>
+                        <option value="Good">Good</option>
+                        <option value="Average">Average</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="foodImage">Upload Food Image:</label>
+                    <input type="file" id="foodImage" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cookPassword">Set a Password:</label>
+                    <input type="password" id="cookPassword" placeholder="Enter a secure password" required>
+                </div>
+
+
+        
+
+                <button type="submit" class="btn">Submit</button>
+                <button class="btn secondary" onclick="closeForm()">Cancel</button>
+            </form>
+        </div>
+
+
+
+        
+ 
+
+
+        <!-- Existing Cook Form -->
+        <!-- <div class="form-container" id="existingCookForm" style="display: none;">
+            <h2>Manage Account</h2>
+            <p>Welcome back! Enter your password to manage your account.</p>
+            <form id="existingCookPasswordForm">
+                <div class="form-group">
+                    <label for="cookPassword">Password:</label>
+                    <input type="password" id="cookPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Verify</button>
+                <button class="btn secondary" onclick="closeForm()">Cancel</button>
+            </form>
+        </div> -->
+
+
+        <!-- Existing Cook Form -->
+<div id="existingCookForm" style="display: none;">
+    <h2>Existing Cook Verification</h2>
+    <form id="existingCookVerificationForm">
+        <label for="existingCookEmail">Email:</label>
+        <input type="email" id="existingCookEmail" placeholder="Enter your email" required />
+        <button type="submit">Verify</button>
+    </form>
+    <button id="deleteCookBtn" class="btn delete-btn" style="margin-top: 10px;">Delete Cook</button>
+</div>
+
+<script>
+    document.getElementById("existingCookVerificationForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+    
+        const enteredEmail = document.getElementById("existingCookEmail").value.trim();
+        const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+    
+        const cook = cooks.find(c => c.email === enteredEmail);
+        if (cook) {
+            alert("Verification successful. Redirecting to your dashboard...");
+            localStorage.setItem("currentCookEmail", enteredEmail); // Store current cook's email for dashboard access
+            window.location.href = "cook_dashboard.html";
+        } else {
+            alert("No matching cook found. Please register as a new cook.");
+        }
+    });
+    </script>
+
+        <!-- Existing Cook Management -->
+        <!-- <div class="form-container" id="existingCookForm" style="display: none;">
+            <h2>Manage Account</h2>
+            <p>Welcome back! Manage your account below.</p>
+            <button class="btn" onclick="viewOrders()">Browse Previous Orders</button>
+            <button class="btn" onclick="updateItems()">Update/Add/Delete Items</button>
+            <button class="btn" onclick="viewEarnings()">View Total Earnings</button>
+            <button class="btn" onclick="viewFeedback()">View Feedback</button>
+            <button class="btn secondary" onclick="closeForm()">Back</button>
+        </div> -->
+    </main>
+
+    <script src="cook.js"></script>
+</body>
+</html>

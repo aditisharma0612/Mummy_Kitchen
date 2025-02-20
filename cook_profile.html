@@ -1,0 +1,158 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cook Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+
+   
+    
+
+
+
+    
+        <h1>Cook's Profile</h1>
+    </header>
+
+    <section id="profileDetails">
+        <section id="profileDetails"></section>
+<section id="foodItems">
+    <h2>Food Items</h2>
+    <div id="foodList"></div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+    const foodItems = JSON.parse(localStorage.getItem("foodItems")) || [];
+    const selectedEmail = localStorage.getItem("selectedCookEmail");
+
+    const selectedCook = cooks.find(cook => cook.email === selectedEmail);
+
+    // Display Cook Details
+    const profileSection = document.getElementById("profileDetails");
+    if (selectedCook) {
+        profileSection.innerHTML = `
+            <h1>${selectedCook.name}</h1>
+            <p><strong>Location:</strong> ${selectedCook.location}</p>
+            <p><strong>Email:</strong> ${selectedCook.email}</p>
+            <p><strong>Phone:</strong> ${selectedCook.phone || "Not provided"}</p>
+        `;
+    } else {
+        profileSection.innerHTML = "<p>Cook details not found.</p>";
+    }
+
+    // Display Food Items
+    const foodList = document.getElementById("foodList");
+    const cookItems = foodItems.filter(item => item.email === selectedEmail);
+
+    cookItems.forEach(item => {
+        const foodCard = document.createElement("div");
+        foodCard.classList.add("food-card");
+        foodCard.innerHTML = `
+            <img src="${item.image}" alt="${item.name}">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <p>Price: ₹${item.price}</p>
+        `;
+        foodList.appendChild(foodCard);
+    });
+});
+</script>
+        Cook details dynamically rendered here
+    </section> 
+
+    <section id="foodItems">
+        <h2>Food Items</h2>
+        <div id="foodList"></div>
+    </section>
+
+    <script src="profile.js"></script>
+</body>
+</html>
+
+
+
+
+
+    -->
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cook Profile</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <header>
+            <header class="navbar">
+                <div class="logo"><a href="index.html">Mummy's Kitchen</a></div>
+                <ul class="nav-links">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="menu.html">Browse Dish</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </header>
+            <!-- <h1>Cook's Profile</h1> -->
+        </header>
+    
+        <main>
+            <section id="profile">
+                <!-- Cook details will be rendered here -->
+                <div id="cookDetails" class="profile-card">
+                    <!-- Details dynamically loaded -->
+                </div>
+            </section>
+    
+            <section id="thaliGallery">
+                <h2>Available Thali Options</h2>
+                <div class="thali-images">
+                    <!-- Sample food images -->
+                    <img src="parantha.jpg" alt="Veg Thali">
+                    <img src="rice.jpg" alt="Non-Veg Thali">
+                    <img src="meals.jpg" alt="Special Thali">
+                </div>
+            </section>
+        </main>
+    
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const cooks = JSON.parse(localStorage.getItem("cooks")) || [];
+                const selectedIndex = localStorage.getItem("selectedCook");
+                const cookDetails = document.getElementById("cookDetails");
+    
+                if (selectedIndex !== null && cooks[selectedIndex]) {
+                    const cook = cooks[selectedIndex];
+                    cookDetails.innerHTML = `
+                        <h2>${cook.name}</h2>
+                        <p><strong>Location:</strong> ${cook.location}</p>
+                        <p><strong>Email:</strong> ${cook.email}</p>
+                        <p><strong>Phone:</strong> ${cook.phone || "Not provided"}</p>
+                        <p><strong>Veg/Non-Veg:</strong> ${cook.type || "Not specified"}</p>
+                        <p><strong>Available Days:</strong> ${cook.days || "Not specified"}</p>
+                        <p><strong>Timings:</strong> ${cook.timings || "Not specified"}</p>
+                    `;
+                } else {
+                    cookDetails.innerHTML = "<p>Cook details not found.</p>";
+                }
+            });
+        </script>
+
+<footer>
+    <p>&copy; 2024 Mummy's Kitchen. All rights reserved.</p>
+    <ul class="social-links">
+        <li><img src="images/facebook-icon.png" alt="Facebook"></li>
+        <li><img src="images/instagram-icon.png" alt="Instagram"></li>
+        <li><img src="images/twitter-icon.png" alt="Twitter"></li>
+    </ul>
+</footer>
+    </body>
+    </html>
+    
